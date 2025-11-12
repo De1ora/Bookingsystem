@@ -1,4 +1,5 @@
 package com.example.bookingsystemAPI.model;
 
-public class BookingStatus {
+public enum BookingStatus {
+    PENDING, CONFIRMED, CANCELLED
 }
