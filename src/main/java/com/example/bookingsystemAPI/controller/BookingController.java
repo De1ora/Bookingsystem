@@ -45,7 +45,7 @@ public class BookingController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id]")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBooking(@PathVariable Long id) { // Void istället för Booking eftersom delete oftast inte retunerar någon body
         boolean deleted = service.deleteBooking(id);
 
