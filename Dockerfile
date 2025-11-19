@@ -1,4 +1,12 @@
-FROM ubuntu:latest
-LABEL authors="lisaf"
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
 
-ENTRYPOINT ["top", "-b"]
+COPY build/libs/*.jar app.jar
+
+RUN addgroup -S spring && \
+    adduser -S spring -G spring \
+
+USER spring:spring
+
+EXPOSE 8080
+CMD ["java", "-jar", "app.jar"]
