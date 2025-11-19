@@ -2,7 +2,7 @@ package com.example.bookingsystemAPI.controller;
 
 import com.example.bookingsystemAPI.model.Booking;
 import com.example.bookingsystemAPI.service.BookingService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +11,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/bookings")
 public class BookingController {
-    @Autowired // Spring ger oss servicen genom annotationen!
-    private BookingService service; // till service
+
+    private final BookingService service;
 
     @GetMapping
     public List<Booking> getAllBookings() {
