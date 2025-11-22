@@ -1,18 +1,18 @@
 package com.example.bookingsystemAPI.service;
 
+import com.example.bookingsystemAPI.exception.ResourceNotFoundException;
 import com.example.bookingsystemAPI.model.Booking;
 import com.example.bookingsystemAPI.repository.BookingRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class BookingServiceImplementation implements BookingService {
 
-    @Autowired
-    private BookingRepository repository;
+    private final BookingRepository repository;
 
     @Override
     public List<Booking> getAllBookings() {
@@ -20,8 +20,9 @@ public class BookingServiceImplementation implements BookingService {
     }
 
     @Override
-    public Optional<Booking> getBookingById(Long id) {
-        return repository.findById(id);
+    public Booking getBookingById(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Booking not found with id: " + id));
     }
 
     @Override
@@ -31,19 +32,18 @@ public class BookingServiceImplementation implements BookingService {
 
     @Override
     public Booking updateBooking(Long id, Booking updatedBooking) {
-        if (repository.existsById(id)) {
-            updatedBooking.setId(id);
-            return repository.save(updatedBooking);
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Booking not found with id: " + id);
         }
-        return null;
+        updatedBooking.setId(id);
+        return repository.save(updatedBooking);
     }
 
     @Override
-    public boolean deleteBooking(Long id) {
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
-            return true;
+    public void deleteBooking(Long id) {
+        if (!repository.existsById(id)) {
+            throw new ResourceNotFoundException("Booking not found with id: " + id);
         }
-        return false;
+        repository.deleteById(id);
     }
 }

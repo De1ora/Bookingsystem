@@ -8,12 +8,8 @@ import java.util.Optional;
 public interface BookingService {
 
     List<Booking> getAllBookings();
-
-    Optional<Booking> getBookingById(Long id);
-
+    Booking getBookingById(Long id);
     Booking createBooking(Booking booking);
-
     Booking updateBooking(Long id, Booking updatedBooking);
-
-    boolean deleteBooking(Long id);
+    void deleteBooking(Long id);
 }

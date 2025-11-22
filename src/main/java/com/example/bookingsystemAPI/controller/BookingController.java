@@ -14,7 +14,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/bookings")
 public class BookingController {
-
     private final BookingService service;
 
     @GetMapping
@@ -24,10 +23,8 @@ public class BookingController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Booking> getBookingById(@PathVariable Long id) {
-        Optional<Booking> booking = service.getBookingById(id);
-
-        return booking.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Booking booking = service.getBookingById(id);
+        return ResponseEntity.ok(booking);
     }
 
     @PostMapping
@@ -39,20 +36,12 @@ public class BookingController {
     @PutMapping("/{id}")
     public ResponseEntity<Booking> updateBooking(@PathVariable Long id, @RequestBody Booking booking) {
         Booking updated = service.updateBooking(id, booking);
-
-        if (updated != null) {
-            return ResponseEntity.ok(updated);
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) { // Void istället för Booking eftersom delete oftast inte retunerar någon body
-        boolean deleted = service.deleteBooking(id);
-
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> deleteBooking(@PathVariable Long id) {
+        service.deleteBooking(id);
+        return ResponseEntity.noContent().build();
     }
 }
