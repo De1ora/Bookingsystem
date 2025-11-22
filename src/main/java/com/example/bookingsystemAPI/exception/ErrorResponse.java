@@ -2,6 +2,7 @@ package com.example.bookingsystemAPI.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+
 import java.time.LocalDateTime;
 
 @Data
