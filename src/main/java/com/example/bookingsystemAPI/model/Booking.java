@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Booking {
+public class Booking { // Lägg till validering i framtiden :)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Databasen sköter ID automatiskt
     private Long id;
